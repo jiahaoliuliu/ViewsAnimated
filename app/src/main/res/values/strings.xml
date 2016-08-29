@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">ViewsAnimated</string>
+    <string name="show_elements">Show elements</string>
+    <string name="button_1">Button 1</string>
+    <string name="button_2">Button 2</string>
+    <string name="button_3">Button 3</string>
+    <string name="button_4">Button 4</string>
+    <string name="hide_elements">Hide elements</string>
 </resources>
