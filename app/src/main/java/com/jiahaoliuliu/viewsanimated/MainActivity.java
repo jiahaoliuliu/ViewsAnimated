@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Views
     private Button mShowElementsButton;
-    private RelativeLayout mAllElementsRelativeLayout;
+    private RelativeLayout mAnimatedElementsRelatedLayout;
     private LinearLayout mHiddenLinearLayout;
     private Button mButton1;
     private Button mButton2;
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         // Link the views
         mShowElementsButton = (Button) findViewById(R.id.show_elements_button);
 
-        mAllElementsRelativeLayout = (RelativeLayout) findViewById(R.id.all_elements_relative_layout);
+        mAnimatedElementsRelatedLayout = (RelativeLayout) findViewById(R.id.animated_elements_relative_layout);
 
         mHiddenLinearLayout = (LinearLayout) findViewById(R.id.hidden_linear_layout);
         // Restore the visibility
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                         // http://stackoverflow.com/questions/9575706/android-get-height-of-a-view-before-it%C2%B4s-drawn Jim Baca
                         // gets called after layout has been done but before display
                         // so we can get the height then hide the view
-                        mHiddenLinearLayoutHeight = mAllElementsRelativeLayout.getHeight();
+                        mHiddenLinearLayoutHeight = mHiddenLinearLayout.getHeight();
 
                         mHiddenLinearLayout.getViewTreeObserver().removeGlobalOnLayoutListener( this );
                         mHiddenLinearLayout.setVisibility(View.GONE);
@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                 .translationY(0);
 
         // Update the high of all the elements relativeLayout
-        LayoutParams layoutParams = mAllElementsRelativeLayout.getLayoutParams();
+        LayoutParams layoutParams = mAnimatedElementsRelatedLayout.getLayoutParams();
 
         // TODO: Add vertical margins
         layoutParams.height = mLastButton.getHeight();
@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
                 .translationY(mHiddenLinearLayoutHeight);
 
         // Update the high of all the elements relativeLayout
-        LayoutParams layoutParams = mAllElementsRelativeLayout.getLayoutParams();
+        LayoutParams layoutParams = mAnimatedElementsRelatedLayout.getLayoutParams();
 
         // TODO: Add vertical margins
         layoutParams.height = mLastButton.getHeight() + mHiddenLinearLayoutHeight;
