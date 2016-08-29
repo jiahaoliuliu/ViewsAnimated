@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.animation.TranslateAnimation;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -54,10 +53,10 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onGlobalLayout() {
+                        // http://stackoverflow.com/questions/9575706/android-get-height-of-a-view-before-it%C2%B4s-drawn Jim Baca
                         // gets called after layout has been done but before display
                         // so we can get the height then hide the view
-
-                        mHiddenLinearLayoutHeight = mAllElementsRelativeLayout.getHeight();  // Ahaha!  Gotcha
+                        mHiddenLinearLayoutHeight = mAllElementsRelativeLayout.getHeight();
 
                         mHiddenLinearLayout.getViewTreeObserver().removeGlobalOnLayoutListener( this );
                         mHiddenLinearLayout.setVisibility(View.GONE);
@@ -99,8 +98,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean areElementsVisible() {
-        return mHiddenLinearLayout.getVisibility() == View.VISIBLE
-                && mHiddenLinearLayout.getAlpha() == 1.0f;
+        return mHiddenLinearLayout.getVisibility() == View.VISIBLE;
     }
 
     @Override
@@ -133,16 +131,20 @@ public class MainActivity extends AppCompatActivity {
                 .setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
+                        Log.v(TAG, "Animation ended. Set the view as gone");
                         super.onAnimationEnd(animation);
                         mHiddenLinearLayout.setVisibility(View.GONE);
+                        // Hack: Remove the listener. So it won't be executed when
+                        // any other animation on this view is executed
+                        mHiddenLinearLayout.animate().setListener(null);
                     }
-                });
+                })
+        ;
 
-        // Move the button from bottom to top
-        TranslateAnimation animate = new TranslateAnimation(0, 0, 0, -mHiddenLinearLayoutHeight);
-        animate.setDuration(ANIMATION_TRANSITION_TIME);
-        animate.setFillAfter(true);
-        mLastButton.startAnimation(animate);
+        mLastButton
+                .animate()
+                .setDuration(ANIMATION_TRANSITION_TIME)
+                .translationY(0);
 
         // Update the high of all the elements relativeLayout
         LayoutParams layoutParams = mAllElementsRelativeLayout.getLayoutParams();
@@ -169,56 +171,18 @@ public class MainActivity extends AppCompatActivity {
                 .setDuration(ANIMATION_TRANSITION_TIME)
                 .alpha(1.0f);
 
-        // Move the elements
-        TranslateAnimation animate = new TranslateAnimation(0, 0, 0, mHiddenLinearLayoutHeight);
-        animate.setDuration(ANIMATION_TRANSITION_TIME);
-        animate.setFillAfter(true);
-        mLastButton.startAnimation(animate);
+        mLastButton
+                .animate()
+                .setDuration(ANIMATION_TRANSITION_TIME)
+                .translationY(mHiddenLinearLayoutHeight);
 
         // Update the high of all the elements relativeLayout
         LayoutParams layoutParams = mAllElementsRelativeLayout.getLayoutParams();
 
         // TODO: Add vertical margins
-        layoutParams.height = mLastButton.getHeight() + mHiddenLinearLayout.getHeight();
+        layoutParams.height = mLastButton.getHeight() + mHiddenLinearLayoutHeight;
 
         updateShowElementsButton();
-    }
-
-    private void fadeInElements() {
-        // Precondition
-        if (areElementsVisible()) {
-            Log.w(TAG, "The view is already visible. Nothing to do here");
-            return;
-        }
-
-        mHiddenLinearLayout
-                .animate()
-                .alpha(1.0f);
-
-        updateShowElementsButton();
-    }
-
-    private void fadeOutElements() {
-        // Precondition
-        if (!areElementsVisible()) {
-            Log.w(TAG, "The view is already non-visible. Nothing to do here");
-            return;
-        }
-
-        mHiddenLinearLayout
-                .animate()
-                .alpha(0.0f);
-
-        updateShowElementsButton();
-    }
-
-    // To animate view slide out from top to bottom
-    public void slideToBottom(View view){
-        TranslateAnimation animate = new TranslateAnimation(0,0,0,view.getHeight());
-        animate.setDuration(500);
-        animate.setFillAfter(true);
-        view.startAnimation(animate);
-        view.setVisibility(View.GONE);
     }
 
     private View.OnClickListener mOnClickListener = new View.OnClickListener(){

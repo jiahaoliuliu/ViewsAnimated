@@ -18,7 +18,7 @@
         android:text="@string/show_elements"
         />
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/all_elements_relative_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -64,5 +64,5 @@
             android:layout_height="wrap_content"
             android:text="@string/last_button"
             />
-    </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>
