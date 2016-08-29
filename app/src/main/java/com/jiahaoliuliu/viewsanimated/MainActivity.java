@@ -43,11 +43,12 @@ public class MainActivity extends AppCompatActivity {
 
         // Link the views
         mShowElementsButton = (Button) findViewById(R.id.show_elements_button);
-        mShowElementsButton.setOnClickListener(mOnClickListener);
 
         mAllElementsRelativeLayout = (RelativeLayout) findViewById(R.id.all_elements_relative_layout);
 
         mHiddenLinearLayout = (LinearLayout) findViewById(R.id.hidden_linear_layout);
+        // Restore the visibility
+        mHiddenLinearLayout.setVisibility(View.VISIBLE);
         mHiddenLinearLayout.getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener(){
 
@@ -137,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
                         // Hack: Remove the listener. So it won't be executed when
                         // any other animation on this view is executed
                         mHiddenLinearLayout.animate().setListener(null);
+                        updateShowElementsButton();
                     }
                 })
         ;
@@ -151,8 +153,6 @@ public class MainActivity extends AppCompatActivity {
 
         // TODO: Add vertical margins
         layoutParams.height = mLastButton.getHeight();
-
-        updateShowElementsButton();
     }
 
     private void showElements() {
@@ -169,7 +169,15 @@ public class MainActivity extends AppCompatActivity {
         mHiddenLinearLayout
                 .animate()
                 .setDuration(ANIMATION_TRANSITION_TIME)
-                .alpha(1.0f);
+                .alpha(1.0f)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        updateShowElementsButton();
+                    }
+                })
+        ;
 
         mLastButton
                 .animate()
@@ -181,8 +189,6 @@ public class MainActivity extends AppCompatActivity {
 
         // TODO: Add vertical margins
         layoutParams.height = mLastButton.getHeight() + mHiddenLinearLayoutHeight;
-
-        updateShowElementsButton();
     }
 
     private View.OnClickListener mOnClickListener = new View.OnClickListener(){
