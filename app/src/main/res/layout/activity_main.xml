@@ -19,42 +19,50 @@
         />
 
     <LinearLayout
-        android:id="@+id/hidden_linear_layout"
+        android:id="@+id/all_elements_relative_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="10dp"
-        android:visibility="visible"
-        >
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/hidden_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <Button
+                android:id="@+id/button_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_1"
+                />
+            <Button
+                android:id="@+id/button_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_2"
+                />
+
+            <Button
+                android:id="@+id/button_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_3"
+                />
+
+            <Button
+                android:id="@+id/button_4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_4"
+                />
+        </LinearLayout>
 
         <Button
+            android:id="@+id/last_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/button_1"
-            />
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/button_2"
-            />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/button_3"
-            />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/button_4"
+            android:text="@string/last_button"
             />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/last_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/last_button"
-        />
 </LinearLayout>
