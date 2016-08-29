@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="10dp"
-        android:visibility="gone"
+        android:visibility="visible"
         >
 
         <Button
@@ -50,4 +50,11 @@
             android:text="@string/button_4"
             />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/last_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/last_button"
+        />
 </LinearLayout>
