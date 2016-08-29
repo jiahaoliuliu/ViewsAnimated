@@ -7,4 +7,5 @@
     <string name="button_4">Button 4</string>
     <string name="hide_elements">Hide elements</string>
     <string name="last_button">Last button</string>
+    <string name="tilt_to_see_scroll_view">Tilt to scroll</string>
 </resources>
